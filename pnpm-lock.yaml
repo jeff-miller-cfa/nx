@@ -643,7 +643,7 @@ importers:
         version: 3.0.0
       '@nx/maven':
         specifier: 22.7.0-beta.4
-        version: 22.7.0-beta.4(nx@22.7.0-beta.4(@swc-node/register@1.11.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.15.10(@swc/helpers@0.5.18)))
+        version: 22.7.0-beta.4(nx@22.7.0-beta.7(@swc-node/register@1.11.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.15.10(@swc/helpers@0.5.18)))
       '@nx/next':
         specifier: 22.7.0-beta.9
         version: 22.7.0-beta.9(9def61d1791c7e3d08502a114467af14)
