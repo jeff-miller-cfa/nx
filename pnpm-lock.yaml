@@ -642,8 +642,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nx/maven':
-        specifier: 22.7.0-beta.4
-        version: 22.7.0-beta.4(nx@22.7.0-beta.7(@swc-node/register@1.11.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.15.10(@swc/helpers@0.5.18)))
+        specifier: 22.7.0-beta.9
+        version: 22.7.0-beta.9(nx@22.7.0-beta.9(@swc-node/register@1.11.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.15.10(@swc/helpers@0.5.18)))
       '@nx/next':
         specifier: 22.7.0-beta.9
         version: 22.7.0-beta.9(9def61d1791c7e3d08502a114467af14)
@@ -10115,7 +10115,7 @@ packages:
     engines: {node: '>= 10'}
 
   '@nx/maven@22.7.0-beta.9':
-    resolution: {integrity: sha512-7Sb9RrNZUQouU58/TxdH1zi23I7IU7YUmQZ/8GZDJDu+LHuuALR8OIg2oZsld4WTwZ7wYuQZb89qQ7wntYE7+w==}
+    resolution: {integrity: sha512-r2KYJS/aWcswSXZKrcAY3FIPLCM36AScKe9xf8GGnDKy4OH3iU5y+VlLDAi1cTsVFObBvx6fIJo8GR77GGNcxA==}
 
   '@nx/module-federation@22.7.0-beta.9':
     resolution: {integrity: sha512-X77lD/lN/pQbAzFWvalxcbz3s4qm9qH2V94jJ4RJjJ8z/Cfas+0PV7GqP0tO7oGNpRg8wrIVrzfmOoDhuTE8VQ==}
