@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { major } from 'semver';
 import { handleImport } from '../../utils/handle-import';
 import * as yargs from 'yargs';
-import { calculateFileChanges, FileData } from '../../project-graph/file-utils';
+import { calculateFileChanges } from '../../project-graph/file-utils';
 import {
   getProjectRoots,
   NxArgs,
@@ -20,7 +20,6 @@ import {
 } from '../../plugins/js/utils/typescript';
 import { filterAffected } from '../../project-graph/affected/affected-project-graph';
 import { createProjectGraphAsync } from '../../project-graph/project-graph';
-import { allFileData } from '../../utils/all-file-data';
 import { chunkify } from '../../utils/chunkify';
 import { sortObjectByKeys } from '../../utils/object-sort';
 import { output } from '../../utils/output';
@@ -101,7 +100,6 @@ async function getPatterns(
   prettier: typeof import('prettier'),
   args: NxArgs & { libsAndApps: boolean; _: string[] }
 ): Promise<string[]> {
-  const graph = await createProjectGraphAsync({ exitOnError: true });
   const allFilesPattern = ['.'];
 
   if (args.all) {
@@ -110,6 +108,7 @@ async function getPatterns(
 
   try {
     if (args.projects && args.projects.length > 0) {
+      const graph = await createProjectGraphAsync({ exitOnError: true });
       return getPatternsFromProjects(args.projects, graph);
     }
 
@@ -132,13 +131,11 @@ async function getPatterns(
     // exclude patterns in .nxignore or .gitignore
     const nonIgnoredPatterns = getIgnoreObject().filter(patterns);
 
-    return args.libsAndApps
-      ? await getPatternsFromApps(
-          nonIgnoredPatterns,
-          await allFileData(),
-          graph
-        )
-      : nonIgnoredPatterns;
+    if (args.libsAndApps) {
+      const graph = await createProjectGraphAsync({ exitOnError: true });
+      return getPatternsFromApps(nonIgnoredPatterns, graph);
+    }
+    return nonIgnoredPatterns;
   } catch (err) {
     output.error({
       title:
@@ -152,7 +149,6 @@ async function getPatterns(
 
 async function getPatternsFromApps(
   affectedFiles: string[],
-  allWorkspaceFiles: FileData[],
   projectGraph: ProjectGraph
 ): Promise<string[]> {
   const graph = await createProjectGraphAsync({

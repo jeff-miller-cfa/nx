@@ -31,6 +31,8 @@ import { performance } from 'perf_hooks';
 import { setupWorkspaceContext } from '../src/utils/workspace-context';
 import { daemonClient } from '../src/daemon/client/client';
 import { removeDbConnections } from '../src/utils/db-connection';
+import { workspaceDataDirectoryForWorkspace } from '../src/utils/cache-directory';
+import { surfaceFatalErrorReports } from '../src/utils/report-on-fatal-error';
 import { ensureAnalyticsPreferenceSet } from '../src/utils/analytics-prompt';
 import { flushAnalytics, startAnalytics } from '../src/analytics';
 import '../src/utils/perf-logging';
@@ -51,6 +53,11 @@ async function main() {
   const workspace = findWorkspaceRoot(process.cwd());
 
   if (workspace) {
+    const workspaceDataDir = workspaceDataDirectoryForWorkspace(workspace.dir);
+    process.report.reportOnFatalError = true;
+    process.report.directory = workspaceDataDir;
+    surfaceFatalErrorReports(workspaceDataDir);
+
     performance.mark('loading dotenv files:start');
     loadRootEnvFiles(workspace.dir);
     performance.mark('loading dotenv files:end');
