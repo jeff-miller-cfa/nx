@@ -53,6 +53,7 @@ type NpmLockFile = {
   version?: string;
   lockfileVersion: number;
   requires?: boolean;
+  overrides?: NormalizedPackageJson['overrides'];
   packages?: Record<string, NpmDependencyV3>;
   dependencies?: Record<string, NpmDependencyV1>;
 };
@@ -417,6 +418,9 @@ export function stringifyNpmLockfile(
   };
   if (rootLockFile.requires) {
     output.requires = rootLockFile.requires;
+  }
+  if (packageJson.overrides && Object.keys(packageJson.overrides).length > 0) {
+    output.overrides = packageJson.overrides;
   }
   if (lockfileVersion > 1) {
     const packages = mapV3Snapshots(mappedPackages, packageJson);
