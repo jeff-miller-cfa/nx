@@ -71,12 +71,18 @@ export default async function handler(
   context: Context
 ): Promise<Response> {
   const pathname = new URL(request.url).pathname;
+  const t0 = Date.now();
 
   context.waitUntil(sendToGA4(request, context, pathname));
 
   const response = await context.next();
+  console.log(
+    `[track-page-requests] ${pathname} origin=${Date.now() - t0}ms status=${response.status}`
+  );
+
   const newHeaders = new Headers(response.headers);
   newHeaders.set('x-nx-edge-function', 'track-page-requests');
+  newHeaders.set('Server-Timing', `origin;dur=${Date.now() - t0}`);
 
   return new Response(response.body, {
     status: response.status,

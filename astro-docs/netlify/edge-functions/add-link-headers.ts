@@ -20,7 +20,11 @@ export default async function handler(
     return new URL(mdPath, request.url);
   }
 
+  const t0 = Date.now();
   const response = await context.next();
+  console.log(
+    `[add-link-headers] ${pathname} origin=${Date.now() - t0}ms status=${response.status}`
+  );
 
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.includes('text/html')) {
@@ -38,6 +42,7 @@ export default async function handler(
   // Netlify responses are immutable
   const newHeaders = new Headers(response.headers);
   newHeaders.set('Link', linkHeader);
+  newHeaders.set('Server-Timing', `origin;dur=${Date.now() - t0}`);
 
   return new Response(response.body, {
     status: response.status,
